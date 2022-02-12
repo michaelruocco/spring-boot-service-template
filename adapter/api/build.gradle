@@ -1,0 +1,57 @@
+plugins {
+    id "org.openapi.generator" version "5.3.1"
+}
+
+configurations {
+    runtimeOnly.exclude module: "slf4j-simple"
+}
+
+dependencies {
+    compileOnly "javax.servlet:servlet-api:2.5"
+    implementation "org.openapitools:openapi-generator:5.3.1"
+    implementation "org.openapitools:jackson-databind-nullable:0.2.2"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "javax.annotation:javax.annotation-api:1.3.2"
+}
+
+sourceSets.main.java.srcDirs = [
+        "build/generated-api/src/main/java",
+        "build/generated-client/src/main/java"
+]
+
+openApiGenerate {
+    validateSpec = true
+    generatorName = "spring"
+    inputSpec = "$projectDir/src/main/resources/static/service-spec-v1.yml"
+    outputDir = "$buildDir/generated-api"
+    apiPackage = "uk.co.mruoc.service.api"
+    modelPackage = "uk.co.mruoc.service.api.model"
+    modelNamePrefix = "Api"
+    configOptions = [
+            delegatePattern: "true",
+            dateLibrary    : "java8"
+    ]
+}
+compileJava.dependsOn tasks.openApiGenerate
+spotlessJava.dependsOn tasks.openApiGenerate
+
+task buildJavaClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    validateSpec = true
+    generatorName = "java"
+    inputSpec = "$projectDir/src/main/resources/static/service-spec-v1.yml"
+    outputDir = "$buildDir/generated-client"
+    apiPackage = "uk.co.mruoc.service.client"
+    modelPackage = "uk.co.mruoc.service.client.model"
+    modelNamePrefix = "Client"
+    configOptions = [
+            java8               : "true",
+            library             : "resttemplate",
+            dateLibrary         : "java8",
+            serializationLibrary: "jackson",
+            useBeanValidation   : "true",
+            enableBuilderSupport: "true"
+    ]
+}
+compileJava.dependsOn tasks.buildJavaClient
+spotlessJava.dependsOn tasks.buildJavaClient

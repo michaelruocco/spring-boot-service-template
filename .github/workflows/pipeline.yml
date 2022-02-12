@@ -3,7 +3,7 @@ name: pipeline
 on:
   push:
     branches-ignore:
-      - 'library-template-*'
+      - 'spring-boot-service-template-*'
 
 jobs:
   build:

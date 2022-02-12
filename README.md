@@ -1,21 +1,20 @@
-# Library Template
+# Spring Boot Service Template
 
-[![Build](https://github.com/michaelruocco/library-template/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/library-template/actions)
-[![codecov](https://codecov.io/gh/michaelruocco/library-template/branch/master/graph/badge.svg?token=FWDNP534O7)](https://codecov.io/gh/michaelruocco/library-template)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/272889cf707b4dcb90bf451392530794)](https://www.codacy.com/gh/michaelruocco/library-template/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/library-template&amp;utm_campaign=Badge_Grade)
-[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/library-template?branch=master)](https://bettercodehub.com/)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/library-template.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22library-template%22)
+[![Build](https://github.com/michaelruocco/spring-boot-service-template/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/spring-boot-service-template/actions)
+[![codecov](https://codecov.io/gh/michaelruocco/spring-boot-service-template/branch/master/graph/badge.svg?token=FWDNP534O7)](https://codecov.io/gh/michaelruocco/spring-boot-service-template)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/272889cf707b4dcb90bf451392530794)](https://www.codacy.com/gh/michaelruocco/spring-boot-service-template/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/spring-boot-service-template&amp;utm_campaign=Badge_Grade)
+[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/spring-boot-service-template?branch=master)](https://bettercodehub.com/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-boot-service-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-boot-service-template)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-boot-service-template&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-boot-service-template)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-boot-service-template&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-boot-service-template)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-boot-service-template&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-boot-service-template)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/spring-boot-service-template.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22spring-boot-service-template%22)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-This is a template project for creating library projects more quickly. It does not include test
-fixtures or integration tests as these are not always required, but attempts to give the other
-commonly used components that I like to use on library projects including:
+This is a template project for creating spring boot projects more efficiently and consistently.
+It does not include test fixtures.
 
 *   [Lombok](https://projectlombok.org/) for boilerplate code generation
 
@@ -56,6 +55,11 @@ commonly used components that I like to use on library projects including:
 
 *   [Codacy](https://www.codacy.com/) for additional static code and coverage analysis
 
+*   [Spring Boot](https://spring.io/projects/spring-boot) for web service functionality
+
+*   [Open API Generator](https://github.com/OpenAPITools/openapi-generator) for generating
+    API endpoint code and API client code from an Open API specification.
+
 For a number of the above tools to work your Github Actions pipeline will require the
 following secrets to be set up:
 
@@ -69,10 +73,10 @@ following secrets to be set up:
 ```gradle
 // cleans build directories
 // prints currentVersion
+// checks dependency versions
+// checks for gradle issues
 // formats code
 // builds code
 // runs tests
-// checks for gradle issues
-// checks dependency versions
 ./gradlew clean currentVersion dependencyUpdates lintGradle spotlessApply build
 ```

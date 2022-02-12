@@ -12,15 +12,6 @@ plugins {
     id "nebula.lint" version "17.6.1"
 }
 
-group "com.github.michaelruocco"
-
-ext {
-    slf4jVersion = "1.7.35"
-    lombokVersion = "1.18.22"
-
-    junitVersion = "5.8.2"
-}
-
 scmVersion {
     versionCreator "versionWithBranch"
     tag {
@@ -29,51 +20,126 @@ scmVersion {
 }
 project.version = scmVersion.version
 
-repositories {
-    mavenCentral()
+allprojects {
+    apply plugin: "idea"
+    apply plugin: "jacoco"
+    apply plugin: "nebula.lint"
+
+    group "com.github.michaelruocco.service"
+    version = rootProject.version
+
+    sourceCompatibility = 15
+    targetCompatibility = 15
+
+    repositories {
+        mavenCentral()
+    }
+
+    jacoco {
+        toolVersion = "0.8.7"
+    }
+
+    gradleLint {
+        rules = ['all-dependency']
+        alwaysRun = false
+    }
 }
 
-gradleLint {
-    rules = ['all-dependency']
-    alwaysRun = false
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "com.diffplug.spotless"
+    apply plugin: 'com.adarshr.test-logger'
+
+    ext {
+        slf4jVersion = "1.7.35"
+        lombokVersion = "1.18.22"
+        springBootVersion = "2.6.3"
+        springVersion = "5.3.15"
+
+        junitVersion = "5.8.2"
+
+        gitUrl = "https://github.com/michaelruocco/spring-boot-service-template"
+        pomConfig = {
+            licenses {
+                license {
+                    name "MIT License"
+                    url "https://opensource.org/licenses/MIT"
+                    distribution "repo"
+                }
+            }
+
+            developers {
+                developer {
+                    id "mruoc"
+                    name "Michael Ruocco"
+                    email "michael.ruocco@hotmail.com"
+                }
+            }
+
+            scm {
+                url project.ext.gitUrl
+            }
+        }
+    }
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+
+        testRuntimeOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+        testImplementation "org.assertj:assertj-core:3.22.0"
+        testImplementation "org.mockito:mockito-core:4.3.1"
+    }
+
+    javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+        systemProperty "org.slf4j.simpleLogger.defaultLogLevel", "debug"
+    }
+
+    testlogger {
+        theme 'mocha'
+        showStandardStreams true
+    }
+
+    spotless {
+        java {
+            palantirJavaFormat("2.17.0")
+        }
+    }
 }
 
-dependencies {
-    compileOnly "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
-
-    testRuntimeOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.assertj:assertj-core:3.22.0"
-    testImplementation "org.mockito:mockito-core:4.3.1"
+nexusPublishing {
+    packageGroup = "com.github.michaelruocco"
+    repositories {
+        sonatype {
+            username = System.getenv("OSSRH_USERNAME")
+            password = System.getenv("OSSRH_PASSWORD")
+        }
+    }
 }
 
-javadoc.options.addStringOption('Xdoclint:none', '-quiet')
-
-tasks.withType(Test) {
-    useJUnitPlatform()
-    systemProperty "org.slf4j.simpleLogger.defaultLogLevel", "debug"
-}
-
-testlogger {
-    theme 'mocha'
-    showStandardStreams true
-}
-
-jacoco {
-    toolVersion = "0.8.7"
-}
-
-jacocoTestReport {
-    dependsOn test
-    sourceSets sourceSets.main
+task codeCoverageReport(type: JacocoReport) {
+    dependsOn {
+        subprojects*.test
+        subprojects.findAll { it.tasks.findByName("integrationTest") != null }.integrationTest
+    }
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
     reports {
         xml.enabled true
         xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
     }
 }
 
@@ -84,72 +150,6 @@ sonarqube {
         property "sonar.organization", "michaelruocco"
         property "sonar.projectKey", "michaelruocco_${name}"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/report.xml"
-    }
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-def gitUrl = "https://github.com/michaelruocco/library-template"
-def pomConfig = {
-    licenses {
-        license {
-            name "MIT License"
-            url "https://opensource.org/licenses/MIT"
-            distribution "repo"
-        }
-    }
-
-    developers {
-        developer {
-            id "mruoc"
-            name "Michael Ruocco"
-            email "michael.ruocco@hotmail.com"
-        }
-    }
-
-    scm {
-        url gitUrl
-    }
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            username = System.getenv("OSSRH_USERNAME")
-            password = System.getenv("OSSRH_PASSWORD")
-        }
-    }
-}
-
-publishing {
-    publications {
-        lib(MavenPublication) {
-            from components.java
-            pom.withXml {
-                def root = asNode()
-                root.appendNode("description", "Template repo to speed up creating new library projects")
-                root.appendNode("name", project.name)
-                root.appendNode("url", gitUrl)
-                root.children().last() + pomConfig
-            }
-        }
-    }
-}
-
-signing {
-    def signingKey = System.getenv("OSSRH_PGP_SECRET_KEY")
-    def signingPassword = System.getenv("OSSRH_PGP_SECRET_KEY_PASSWORD")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.lib
-}
-signLibPublication.enabled = gradle.startParameter.taskNames.contains("publishToSonatype")
-
-spotless {
-    java {
-        palantirJavaFormat("2.17.0")
     }
 }
 
