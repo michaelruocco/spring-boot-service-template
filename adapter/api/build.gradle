@@ -1,5 +1,5 @@
 plugins {
-    id "org.openapi.generator" version "5.3.1"
+    id "org.openapi.generator" version "${openApiGeneratorVersion}"
 }
 
 configurations {
@@ -8,7 +8,7 @@ configurations {
 
 dependencies {
     compileOnly "javax.servlet:servlet-api:2.5"
-    implementation "org.openapitools:openapi-generator:5.3.1"
+    implementation "org.openapitools:openapi-generator:${openApiGeneratorVersion}"
     implementation "org.openapitools:jackson-databind-nullable:0.2.2"
     implementation "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
     implementation "org.springframework:spring-webmvc:${springVersion}"
@@ -20,10 +20,12 @@ sourceSets.main.java.srcDirs = [
         "build/generated-client/src/main/java"
 ]
 
+def openApiPath = "src/main/resources/openapi.yaml"
+
 openApiGenerate {
     validateSpec = true
     generatorName = "spring"
-    inputSpec = "$projectDir/src/main/resources/static/service-spec-v1.yml"
+    inputSpec = "$projectDir/${openApiPath}"
     outputDir = "$buildDir/generated-api"
     apiPackage = "uk.co.mruoc.service.api"
     modelPackage = "uk.co.mruoc.service.api.model"
@@ -39,7 +41,7 @@ spotlessJava.dependsOn tasks.openApiGenerate
 task buildJavaClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     validateSpec = true
     generatorName = "java"
-    inputSpec = "$projectDir/src/main/resources/static/service-spec-v1.yml"
+    inputSpec = "$projectDir/${openApiPath}"
     outputDir = "$buildDir/generated-client"
     apiPackage = "uk.co.mruoc.service.client"
     modelPackage = "uk.co.mruoc.service.client.model"

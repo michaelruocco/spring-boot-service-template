@@ -1,0 +1,3 @@
+dependencies {
+    api "org.javamoney:moneta:1.4.2"
+}

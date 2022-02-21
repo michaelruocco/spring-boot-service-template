@@ -1,0 +1,183 @@
+openapi: "3.0.3"
+info:
+  title: spring boot template API
+  version: v1
+
+servers:
+  - url: http://localhost:8099/v1
+    description: V1 local server for development
+
+paths:
+  /widgets:
+    post:
+      summary: create a widget
+      operationId: create-widget
+      requestBody:
+        description: details of the widget to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWidgetRequest"
+      responses:
+        '201':
+          description: created widget
+          headers:
+            Location:
+              description: url of created widget
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /widgets/{id}:
+    get:
+      summary: specific widget
+      operationId: get-widget-by-id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the id of the widget to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: widget
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /widgets/pages:
+    post:
+      summary: query a page of widgets
+      operationId: query-widgets-page
+      requestBody:
+        description: details of the page of widgets to be queried
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryWidgetsPageRequest"
+      responses:
+        '200':
+          description: page of widgets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WidgetsPage"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    QueryWidgetsPageRequest:
+      type: object
+      required:
+        - pageParams
+      properties:
+        pageParams:
+          $ref: "#/components/schemas/PageParams"
+    PageParams:
+      type: object
+      required:
+        - limit
+        - offset
+      properties:
+        limit:
+          type: integer
+          format: int32
+          default: 50
+          minimum: 1
+          maximum: 100
+        offset:
+          type: integer
+          format: int32
+          default: 0
+          minimum: 0
+    CreateWidgetRequest:
+      type: object
+      required:
+        - description
+        - cost
+      properties:
+        description:
+          type: string
+        cost:
+          $ref: "#/components/schemas/MonetaryAmount"
+    Widget:
+      type: object
+      required:
+        - id
+        - description
+        - cost
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        cost:
+          $ref: "#/components/schemas/MonetaryAmount"
+    MonetaryAmount:
+      type: object
+      required:
+        - value
+        - currency
+      properties:
+        value:
+          type: number
+        currency:
+          type: string
+    WidgetsPage:
+      type: object
+      required:
+        - request
+        - totalNumberOfWidgets
+        - widgets
+      properties:
+        request:
+          $ref: "#/components/schemas/QueryWidgetsPageRequest"
+        totalWidgets:
+          type: integer
+        widgets:
+          $ref: "#/components/schemas/Widgets"
+    Widgets:
+      type: array
+      items:
+        $ref: "#/components/schemas/Widget"
+    Error:
+      type: object
+      required:
+        - timestamp
+        - status
+        - error
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        path:
+          type: string
+        detail:
+          type: string

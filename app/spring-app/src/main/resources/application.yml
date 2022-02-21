@@ -1,0 +1,6 @@
+spring:
+  mustache.check-template-location: false
+
+springdoc:
+  api-docs.enabled: false
+  swagger-ui.url: /openapi.yaml
