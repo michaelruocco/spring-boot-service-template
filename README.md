@@ -11,6 +11,15 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/spring-boot-service-template.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22spring-boot-service-template%22)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## TODO
+
+1. Add actuator endpoint with build info
+2. Build into docker image and publish
+3. Add unit and integration tests
+4. Add postman examples
+5. Add postgres db implementation / with flyway
+6. Add OIDC configuration integration and run with docker compose
+
 ## Overview
 
 This is a template project for creating spring boot projects more efficiently and consistently.
