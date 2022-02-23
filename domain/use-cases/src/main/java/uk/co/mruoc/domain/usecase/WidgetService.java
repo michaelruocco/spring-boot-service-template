@@ -11,7 +11,7 @@ import uk.co.mruoc.domain.entity.WidgetsPage;
 @RequiredArgsConstructor
 public class WidgetService {
 
-    private final Supplier<UUID> newWidgetIdSupplier;
+    private final Supplier<UUID> newIdSupplier;
     private final WidgetRepository repository;
 
     public Widget create(CreateWidgetRequest request) {
@@ -34,7 +34,7 @@ public class WidgetService {
 
     private Widget toWidget(CreateWidgetRequest request) {
         return Widget.builder()
-                .id(newWidgetIdSupplier.get())
+                .id(newIdSupplier.get())
                 .description(request.getDescription())
                 .cost(request.getCost())
                 .build();
