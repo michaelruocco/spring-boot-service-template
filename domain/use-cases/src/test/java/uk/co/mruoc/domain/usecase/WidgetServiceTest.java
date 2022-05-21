@@ -10,68 +10,60 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
-import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import uk.co.mruoc.domain.entity.CreateWidgetRequest;
 import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
 import uk.co.mruoc.domain.entity.Widget;
+import uk.co.mruoc.domain.entity.WidgetMother;
 import uk.co.mruoc.domain.entity.WidgetsPage;
 
 class WidgetServiceTest {
 
-    private static final UUID ID = UUID.fromString("75fa54d8-19c1-48b4-aee9-ed05ef3c81d0");
-
-    private final Supplier<UUID> newIdSupplier = () -> ID;
+    private final WidgetFactory factory = mock(WidgetFactory.class);
     private final WidgetRepository repository = mock(WidgetRepository.class);
 
-    private final WidgetService service = new WidgetService(newIdSupplier, repository);
+    private final WidgetService service = new WidgetService(factory, repository);
 
     @Test
     void shouldThrowExceptionIfWidgetIsNotFoundInRepository() {
-        when(repository.findById(ID)).thenReturn(Optional.empty());
+        UUID id = UUID.fromString("632b0be0-55bd-46ba-bfb8-149e06e262d7");
+        when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Throwable error = catchThrowable(() -> service.getById(ID));
+        Throwable error = catchThrowable(() -> service.getById(id));
 
-        assertThat(error).isInstanceOf(WidgetNotFoundException.class).hasMessage(ID.toString());
+        assertThat(error).isInstanceOf(WidgetNotFoundException.class).hasMessage(id.toString());
     }
 
     @Test
     void shouldReturnWidgetIfFoundInRepository() {
-        Widget expectedWidget = givenWidgetReturnedForId();
+        UUID id = UUID.fromString("92054068-af48-4903-acc4-0b3f8ed7a128");
+        Widget expectedWidget = givenWidgetReturnedForId(id);
 
-        Widget widget = service.getById(ID);
+        Widget widget = service.getById(id);
 
         assertThat(widget).isEqualTo(expectedWidget);
     }
 
     @Test
-    void shouldAllocateNewIdToWidgetAndSave() {
-        givenWidgetReturnedForId();
-        CreateWidgetRequest request = CreateWidgetRequest.builder()
-                .description("test widget")
-                .cost(Money.of(89.99, "GBP"))
-                .build();
+    void shouldSaveWidget() {
+        CreateWidgetRequest request = mock(CreateWidgetRequest.class);
+        Widget expectedWidget = WidgetMother.build();
+        when(factory.build(request)).thenReturn(expectedWidget);
 
         service.create(request);
 
-        ArgumentCaptor<Widget> captor = ArgumentCaptor.forClass(Widget.class);
-        verify(repository).save(captor.capture());
-        Widget widget = captor.getValue();
-        assertThat(widget.getId()).isEqualTo(ID);
-        assertThat(widget.getDescription()).isEqualTo(request.getDescription());
-        assertThat(widget.getCost()).isEqualTo(request.getCost());
+        verify(repository).save(expectedWidget);
     }
 
     @Test
-    void shouldReturnCreatedWidgetFromRepository() {
-        Widget expectedWidget = givenWidgetReturnedForId();
+    void shouldReturnWidgetIdOnCreate() {
         CreateWidgetRequest request = mock(CreateWidgetRequest.class);
+        Widget expectedWidget = WidgetMother.build();
+        when(factory.build(request)).thenReturn(expectedWidget);
 
-        Widget widget = service.create(request);
+        UUID id = service.create(request);
 
-        assertThat(widget).isEqualTo(expectedWidget);
+        assertThat(id).isEqualTo(expectedWidget.getId());
     }
 
     @Test
@@ -84,30 +76,30 @@ class WidgetServiceTest {
     }
 
     @Test
-    void shouldPopulateNumberOfWidgetsOnWidgetsPage() {
-        int expectedNumberOfWidgets = 10;
+    void shouldPopulateTotalCountOnWidgetsPage() {
+        int expectedCount = 10;
         QueryWidgetsPageRequest request = mock(QueryWidgetsPageRequest.class);
-        when(repository.getTotalNumberOfWidgets(request)).thenReturn(expectedNumberOfWidgets);
+        when(repository.getTotalCount(request)).thenReturn(expectedCount);
 
         WidgetsPage page = service.getWidgetsPage(request);
 
-        assertThat(page.getTotalNumberOfWidgets()).isEqualTo(expectedNumberOfWidgets);
+        assertThat(page.getTotalCount()).isEqualTo(expectedCount);
     }
 
     @Test
     void shouldPopulateWidgetsOnWidgetsPage() {
         Collection<Widget> widgets = Collections.emptyList();
         QueryWidgetsPageRequest request = mock(QueryWidgetsPageRequest.class);
-        when(repository.findWidgets(request)).thenReturn(widgets);
+        when(repository.find(request)).thenReturn(widgets);
 
         WidgetsPage page = service.getWidgetsPage(request);
 
         assertThat(page.getWidgets()).isEqualTo(widgets);
     }
 
-    private Widget givenWidgetReturnedForId() {
-        Widget widget = mock(Widget.class);
-        when(repository.findById(ID)).thenReturn(Optional.of(widget));
+    private Widget givenWidgetReturnedForId(UUID id) {
+        Widget widget = WidgetMother.withId(id);
+        when(repository.findById(widget.getId())).thenReturn(Optional.of(widget));
         return widget;
     }
 }

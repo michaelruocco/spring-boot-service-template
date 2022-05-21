@@ -33,12 +33,12 @@ public class InMemoryWidgetRepository implements WidgetRepository {
     }
 
     @Override
-    public int getTotalNumberOfWidgets(QueryWidgetsPageRequest request) {
+    public int getTotalCount(QueryWidgetsPageRequest request) {
         return widgets.size();
     }
 
     @Override
-    public Collection<Widget> findWidgets(QueryWidgetsPageRequest request) {
+    public Collection<Widget> find(QueryWidgetsPageRequest request) {
         return getPageWidgets(request.getPageParams());
     }
 

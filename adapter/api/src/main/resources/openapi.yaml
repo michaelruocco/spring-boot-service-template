@@ -128,6 +128,7 @@ components:
         - id
         - description
         - cost
+        - createdAt
       properties:
         id:
           type: string
@@ -135,6 +136,9 @@ components:
           type: string
         cost:
           $ref: "#/components/schemas/MonetaryAmount"
+        createdAt:
+          type: string
+          format: date-time
     MonetaryAmount:
       type: object
       required:
@@ -149,12 +153,12 @@ components:
       type: object
       required:
         - request
-        - totalNumberOfWidgets
+        - totalCount
         - widgets
       properties:
         request:
           $ref: "#/components/schemas/QueryWidgetsPageRequest"
-        totalWidgets:
+        totalCount:
           type: integer
         widgets:
           $ref: "#/components/schemas/Widgets"

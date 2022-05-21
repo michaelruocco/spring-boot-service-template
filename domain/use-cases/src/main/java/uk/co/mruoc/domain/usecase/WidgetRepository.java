@@ -12,7 +12,7 @@ public interface WidgetRepository {
 
     Optional<Widget> findById(UUID id);
 
-    int getTotalNumberOfWidgets(QueryWidgetsPageRequest request);
+    int getTotalCount(QueryWidgetsPageRequest request);
 
-    Collection<Widget> findWidgets(QueryWidgetsPageRequest request);
+    Collection<Widget> find(QueryWidgetsPageRequest request);
 }

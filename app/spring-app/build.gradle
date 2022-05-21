@@ -19,20 +19,19 @@ ext["junit-jupiter.version"] = "${junitVersion}"
 dependencies {
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springdoc:springdoc-openapi-ui:1.6.5"
-    implementation "org.springframework.hateoas:spring-hateoas:1.4.1"
+    implementation "org.springdoc:springdoc-openapi-ui:1.6.8"
+    implementation "org.springframework.hateoas:spring-hateoas:1.5.0"
     implementation project(":api")
     implementation project(":entities")
     implementation project(":use-cases")
     implementation project(":repository")
 
-    testImplementation "uk.org.webcompere:system-stubs-jupiter:2.0.0"
-    testImplementation "org.mockito:mockito-core:4.3.0"
+    testImplementation "uk.org.webcompere:system-stubs-jupiter:2.0.1"
 
     integrationTestCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     integrationTestAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    integrationTestImplementation "org.awaitility:awaitility:4.1.1"
-    integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.28.0"
+    integrationTestImplementation "org.awaitility:awaitility:4.2.0"
+    integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"
 }
 

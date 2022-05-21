@@ -32,8 +32,9 @@ public class RestWidgetsApiDelegate implements WidgetsApiDelegate {
     @Override
     public ResponseEntity<ApiWidget> createWidget(ApiCreateWidgetRequest apiRequest) {
         CreateWidgetRequest request = converter.toCreateRequest(apiRequest);
-        Widget widget = service.create(request);
-        return ResponseEntity.created(toCreatedLink(widget.getId())).body(converter.toApiWidget(widget));
+        UUID id = service.create(request);
+        Widget widget = service.getById(id);
+        return ResponseEntity.created(toCreatedLink(id)).body(converter.toApiWidget(widget));
     }
 
     @Override

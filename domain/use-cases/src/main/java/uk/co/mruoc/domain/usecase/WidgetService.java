@@ -1,7 +1,6 @@
 package uk.co.mruoc.domain.usecase;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.domain.entity.CreateWidgetRequest;
 import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
@@ -11,13 +10,13 @@ import uk.co.mruoc.domain.entity.WidgetsPage;
 @RequiredArgsConstructor
 public class WidgetService {
 
-    private final Supplier<UUID> newIdSupplier;
+    private final WidgetFactory factory;
     private final WidgetRepository repository;
 
-    public Widget create(CreateWidgetRequest request) {
-        Widget widget = toWidget(request);
+    public UUID create(CreateWidgetRequest request) {
+        Widget widget = factory.build(request);
         repository.save(widget);
-        return getById(widget.getId());
+        return widget.getId();
     }
 
     public Widget getById(UUID id) {
@@ -27,16 +26,8 @@ public class WidgetService {
     public WidgetsPage getWidgetsPage(QueryWidgetsPageRequest request) {
         return WidgetsPage.builder()
                 .request(request)
-                .totalNumberOfWidgets(repository.getTotalNumberOfWidgets(request))
-                .widgets(repository.findWidgets(request))
-                .build();
-    }
-
-    private Widget toWidget(CreateWidgetRequest request) {
-        return Widget.builder()
-                .id(newIdSupplier.get())
-                .description(request.getDescription())
-                .cost(request.getCost())
+                .totalCount(repository.getTotalCount(request))
+                .widgets(repository.find(request))
                 .build();
     }
 }

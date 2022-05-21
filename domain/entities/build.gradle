@@ -1,3 +1,10 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
 dependencies {
     api "org.javamoney:moneta:1.4.2"
+
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }

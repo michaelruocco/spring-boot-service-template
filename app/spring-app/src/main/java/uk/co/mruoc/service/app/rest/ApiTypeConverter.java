@@ -1,10 +1,14 @@
 package uk.co.mruoc.service.app.rest;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.money.MonetaryAmount;
+import lombok.RequiredArgsConstructor;
 import org.javamoney.moneta.Money;
 import uk.co.mruoc.domain.entity.CreateWidgetRequest;
 import uk.co.mruoc.domain.entity.PageParams;
@@ -18,7 +22,14 @@ import uk.co.mruoc.service.api.model.ApiQueryWidgetsPageRequest;
 import uk.co.mruoc.service.api.model.ApiWidget;
 import uk.co.mruoc.service.api.model.ApiWidgetsPage;
 
+@RequiredArgsConstructor
 public class ApiTypeConverter {
+
+    private final ZoneOffset offset;
+
+    public ApiTypeConverter() {
+        this(ZoneOffset.UTC);
+    }
 
     public CreateWidgetRequest toCreateRequest(ApiCreateWidgetRequest apiRequest) {
         return CreateWidgetRequest.builder()
@@ -31,7 +42,8 @@ public class ApiTypeConverter {
         return new ApiWidget()
                 .id(widget.getId().toString())
                 .description(widget.getDescription())
-                .cost(toApiMonetaryAmount(widget.getCost()));
+                .cost(toApiMonetaryAmount(widget.getCost()))
+                .createdAt(toOffset(widget.getCreatedAt()));
     }
 
     public QueryWidgetsPageRequest toWidgetsPageRequest(ApiQueryWidgetsPageRequest apiRequest) {
@@ -41,7 +53,7 @@ public class ApiTypeConverter {
     public ApiWidgetsPage toApiWidgetsPage(WidgetsPage page) {
         return new ApiWidgetsPage()
                 .request(toApiWidgetsPageRequest(page.getRequest()))
-                .totalWidgets(page.getTotalNumberOfWidgets())
+                .totalCount(page.getTotalCount())
                 .widgets(toApiWidgets(page.getWidgets()));
     }
 
@@ -72,5 +84,9 @@ public class ApiTypeConverter {
         return new ApiMonetaryAmount()
                 .value(amount.getNumber().numberValue(BigDecimal.class))
                 .currency(amount.getCurrency().getCurrencyCode());
+    }
+
+    private OffsetDateTime toOffset(Instant instant) {
+        return instant.atOffset(offset);
     }
 }

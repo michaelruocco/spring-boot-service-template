@@ -9,6 +9,6 @@ import lombok.Data;
 public class WidgetsPage {
 
     private final QueryWidgetsPageRequest request;
-    private final int totalNumberOfWidgets;
+    private final int totalCount;
     private final Collection<Widget> widgets;
 }
