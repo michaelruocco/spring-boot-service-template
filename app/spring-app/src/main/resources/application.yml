@@ -1,2 +1,9 @@
 spring:
   mustache.check-template-location: false
+
+management:
+  endpoints.web.exposure.include: info,health
+  endpoint.health.probes.enabled: true
+  health:
+    livenessState.enabled: true
+    readinessState.enabled: true

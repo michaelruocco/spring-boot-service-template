@@ -13,12 +13,12 @@
 
 ## TODO
 
-1. Add actuator endpoint with build info
-2. Build into docker image and publish
-3. Add unit and integration tests
-4. Add postman examples
-5. Add postgres db implementation / with flyway
-6. Add OIDC configuration integration and run with docker compose
+1. Build into docker image and publish
+2. Add unit and integration tests
+3. Add postman examples
+4. Add postgres db implementation / with flyway
+5. Add OIDC configuration integration and run with docker compose
+6. Add kafka integration
 
 ## Overview
 
