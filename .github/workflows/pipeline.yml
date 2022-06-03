@@ -54,11 +54,7 @@ jobs:
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         with:
-          files:
-            - build/test-results/**/*.xml
-            - app/spring-app/build/test-results/**/*.xml
-            - domain/entities/build/test-results/**/*.xml
-            - domain/use-cases/build/test-results/**/*.xml
+          files: "**/**/build/test-results/**/*.xml"
 
       - name: Sonar Analysis
         env:
