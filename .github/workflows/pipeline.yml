@@ -48,6 +48,14 @@ jobs:
       - name: Test
         run: ./gradlew test
 
+      - name: Integration Test
+        run: ./gradlew integrationTest
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          files: "/**/build/test-results/**/*.xml"
+
       - name: Sonar Analysis
         env:
           GITHUB_TOKEN: ${{ github.token }}
