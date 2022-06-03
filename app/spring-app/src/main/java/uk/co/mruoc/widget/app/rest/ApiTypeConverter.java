@@ -40,7 +40,7 @@ public class ApiTypeConverter {
 
     public ApiWidget toApiWidget(Widget widget) {
         return new ApiWidget()
-                .id(widget.getId().toString())
+                .id(widget.getId())
                 .description(widget.getDescription())
                 .cost(toApiMonetaryAmount(widget.getCost()))
                 .createdAt(toOffset(widget.getCreatedAt()));

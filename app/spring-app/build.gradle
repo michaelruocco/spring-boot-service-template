@@ -15,6 +15,10 @@ testSets {
     integrationTest
 }
 
+configurations {
+    testRuntimeOnly.exclude module: "slf4j-simple"
+}
+
 ext["junit-jupiter.version"] = "${junitVersion}"
 
 dependencies {
@@ -35,6 +39,8 @@ dependencies {
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
     integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"
+    integrationTestImplementation "org.awaitility:awaitility:4.2.0"
+
 }
 
 bootRun {

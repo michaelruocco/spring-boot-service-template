@@ -10,6 +10,8 @@ servers:
 paths:
   '/widgets':
     post:
+      tags:
+        - widget
       summary: create a widget
       operationId: create-widget
       requestBody:
@@ -39,6 +41,8 @@ paths:
                 $ref: "#/components/schemas/Error"
   '/widgets/{id}':
     get:
+      tags:
+        - widget
       summary: specific widget
       operationId: get-widget-by-id
       parameters:
@@ -63,6 +67,8 @@ paths:
                 $ref: "#/components/schemas/Error"
   '/widgets/pages':
     post:
+      tags:
+        - widget
       summary: query a page of widgets
       operationId: query-widgets-page
       requestBody:
@@ -132,6 +138,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         description:
           type: string
         cost:
