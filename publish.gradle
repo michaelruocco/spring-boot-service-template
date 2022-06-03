@@ -1,0 +1,32 @@
+apply plugin: "maven-publish"
+apply plugin: "signing"
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        lib(MavenPublication) {
+            from components.java
+            suppressPomMetadataWarningsFor("testFixturesApiElements")
+            suppressPomMetadataWarningsFor("testFixturesRuntimeElements")
+            pom.withXml {
+                def root = asNode()
+                root.appendNode("description", project.name)
+                root.appendNode("name", project.name)
+                root.appendNode("url", project.ext.gitUrl)
+                root.children().last() + project.ext.pomConfig
+            }
+        }
+    }
+}
+
+signing {
+    def signingKey = System.getenv("OSSRH_PGP_SECRET_KEY")
+    def signingPassword = System.getenv("OSSRH_PGP_SECRET_KEY_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.lib
+}
+signLibPublication.enabled = gradle.startParameter.taskNames.contains("publishToSonatype")

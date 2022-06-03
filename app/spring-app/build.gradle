@@ -46,3 +46,5 @@ bootRun {
 springBoot {
     buildInfo()
 }
+
+apply from: rootProject.file("publish.gradle")
