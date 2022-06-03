@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
 import java.math.BigDecimal;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import uk.co.mruoc.spring.app.runner.SpringAppExtension;
@@ -16,7 +15,7 @@ import uk.co.mruoc.widget.client.model.ClientCreateWidgetRequest;
 import uk.co.mruoc.widget.client.model.ClientMonetaryAmount;
 import uk.co.mruoc.widget.client.model.ClientWidget;
 
-class SpringApplicationIntegrationTest {
+class SpringWidgetAppIntegrationTest {
 
     private static final WidgetAppTestEnvironment ENV = WidgetAppTestEnvironment.build();
     private static final ClientFactory CLIENT_FACTORY = new ClientFactory();
@@ -34,7 +33,7 @@ class SpringApplicationIntegrationTest {
         ClientWidget widget = client.createWidget(request);
 
         assertThat(widget.getId()).isNotNull();
-        assertThat(widget.getCreatedAt()).isCloseToUtcNow(within(250, MILLIS));
+        assertThat(widget.getCreatedAt()).isCloseToUtcNow(within(550, MILLIS));
         assertThat(widget.getDescription()).isEqualTo(request.getDescription());
         assertThat(widget.getCost()).isEqualTo(request.getCost());
     }
