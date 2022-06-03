@@ -8,7 +8,7 @@ servers:
     description: V1 local server for development
 
 paths:
-  /widgets:
+  '/widgets':
     post:
       summary: create a widget
       operationId: create-widget
@@ -37,7 +37,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /widgets/{id}:
+  '/widgets/{id}':
     get:
       summary: specific widget
       operationId: get-widget-by-id
@@ -61,7 +61,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /widgets/pages:
+  '/widgets/pages':
     post:
       summary: query a page of widgets
       operationId: query-widgets-page
