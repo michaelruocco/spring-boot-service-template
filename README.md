@@ -87,5 +87,5 @@ following secrets to be set up:
 // formats code
 // builds code
 // runs tests
-./gradlew clean currentVersion dependencyUpdates lintGradle spotlessApply build
+./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build
 ```
