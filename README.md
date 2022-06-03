@@ -14,7 +14,7 @@
 ## TODO
 
 1. Build into docker image and publish
-2. Add unit and integration tests
+2. Add integration tests
 3. Add postman examples
 4. Add postgres db implementation / with flyway
 5. Add OIDC configuration integration and run with docker compose
