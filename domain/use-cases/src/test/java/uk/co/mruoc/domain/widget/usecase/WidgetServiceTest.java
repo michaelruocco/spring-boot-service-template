@@ -1,4 +1,4 @@
-package uk.co.mruoc.domain.usecase;
+package uk.co.mruoc.domain.widget.usecase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -11,11 +11,11 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.domain.entity.CreateWidgetRequest;
-import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
-import uk.co.mruoc.domain.entity.Widget;
-import uk.co.mruoc.domain.entity.WidgetMother;
-import uk.co.mruoc.domain.entity.WidgetsPage;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequest;
+import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.WidgetMother;
+import uk.co.mruoc.domain.widget.entity.WidgetsPage;
 
 class WidgetServiceTest {
 

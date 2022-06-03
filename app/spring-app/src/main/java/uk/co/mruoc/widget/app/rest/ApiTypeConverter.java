@@ -1,4 +1,4 @@
-package uk.co.mruoc.service.app.rest;
+package uk.co.mruoc.widget.app.rest;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -10,17 +10,17 @@ import java.util.stream.Collectors;
 import javax.money.MonetaryAmount;
 import lombok.RequiredArgsConstructor;
 import org.javamoney.moneta.Money;
-import uk.co.mruoc.domain.entity.CreateWidgetRequest;
-import uk.co.mruoc.domain.entity.PageParams;
-import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
-import uk.co.mruoc.domain.entity.Widget;
-import uk.co.mruoc.domain.entity.WidgetsPage;
-import uk.co.mruoc.service.api.model.ApiCreateWidgetRequest;
-import uk.co.mruoc.service.api.model.ApiMonetaryAmount;
-import uk.co.mruoc.service.api.model.ApiPageParams;
-import uk.co.mruoc.service.api.model.ApiQueryWidgetsPageRequest;
-import uk.co.mruoc.service.api.model.ApiWidget;
-import uk.co.mruoc.service.api.model.ApiWidgetsPage;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequest;
+import uk.co.mruoc.domain.widget.entity.PageParams;
+import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.WidgetsPage;
+import uk.co.mruoc.widget.api.model.ApiCreateWidgetRequest;
+import uk.co.mruoc.widget.api.model.ApiMonetaryAmount;
+import uk.co.mruoc.widget.api.model.ApiPageParams;
+import uk.co.mruoc.widget.api.model.ApiQueryWidgetsPageRequest;
+import uk.co.mruoc.widget.api.model.ApiWidget;
+import uk.co.mruoc.widget.api.model.ApiWidgetsPage;
 
 @RequiredArgsConstructor
 public class ApiTypeConverter {

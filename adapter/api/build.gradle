@@ -27,8 +27,8 @@ openApiGenerate {
     generatorName = "spring"
     inputSpec = "$projectDir/${openApiPath}"
     outputDir = "$buildDir/generated-api"
-    apiPackage = "uk.co.mruoc.service.api"
-    modelPackage = "uk.co.mruoc.service.api.model"
+    apiPackage = "uk.co.mruoc.widget.api"
+    modelPackage = "uk.co.mruoc.widget.api.model"
     modelNamePrefix = "Api"
     configOptions = [
             delegatePattern: "true",
@@ -43,8 +43,8 @@ task buildJavaClient(type: org.openapitools.generator.gradle.plugin.tasks.Genera
     generatorName = "java"
     inputSpec = "$projectDir/${openApiPath}"
     outputDir = "$buildDir/generated-client"
-    apiPackage = "uk.co.mruoc.service.client"
-    modelPackage = "uk.co.mruoc.service.client.model"
+    apiPackage = "uk.co.mruoc.widget.client"
+    modelPackage = "uk.co.mruoc.widget.client.model"
     modelNamePrefix = "Client"
     configOptions = [
             java8               : "true",

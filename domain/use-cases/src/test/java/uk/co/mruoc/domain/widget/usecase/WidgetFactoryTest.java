@@ -1,4 +1,4 @@
-package uk.co.mruoc.domain.usecase;
+package uk.co.mruoc.domain.widget.usecase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,9 +8,9 @@ import java.time.ZoneOffset;
 import java.util.UUID;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.domain.entity.CreateWidgetRequest;
-import uk.co.mruoc.domain.entity.CreateWidgetRequestMother;
-import uk.co.mruoc.domain.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequest;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequestMother;
+import uk.co.mruoc.domain.widget.entity.Widget;
 
 class WidgetFactoryTest {
 

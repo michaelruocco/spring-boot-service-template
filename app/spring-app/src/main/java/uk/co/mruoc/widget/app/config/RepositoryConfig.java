@@ -1,9 +1,9 @@
-package uk.co.mruoc.service.app.config;
+package uk.co.mruoc.widget.app.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.mruoc.domain.repository.InMemoryWidgetRepository;
-import uk.co.mruoc.domain.usecase.WidgetRepository;
+import uk.co.mruoc.domain.widget.usecase.WidgetRepository;
 
 @Configuration
 public class RepositoryConfig {

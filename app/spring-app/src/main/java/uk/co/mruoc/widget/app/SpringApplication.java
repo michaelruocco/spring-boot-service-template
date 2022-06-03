@@ -1,4 +1,4 @@
-package uk.co.mruoc.service.app;
+package uk.co.mruoc.widget.app;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

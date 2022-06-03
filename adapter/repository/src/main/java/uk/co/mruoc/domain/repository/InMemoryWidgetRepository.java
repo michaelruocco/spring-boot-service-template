@@ -8,10 +8,10 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.domain.entity.PageParams;
-import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
-import uk.co.mruoc.domain.entity.Widget;
-import uk.co.mruoc.domain.usecase.WidgetRepository;
+import uk.co.mruoc.domain.widget.entity.PageParams;
+import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
+import uk.co.mruoc.domain.widget.usecase.WidgetRepository;
 
 @RequiredArgsConstructor
 public class InMemoryWidgetRepository implements WidgetRepository {

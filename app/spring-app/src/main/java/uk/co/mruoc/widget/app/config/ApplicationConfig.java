@@ -1,15 +1,15 @@
-package uk.co.mruoc.service.app.config;
+package uk.co.mruoc.widget.app.config;
 
 import java.time.Clock;
 import java.util.UUID;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import uk.co.mruoc.domain.usecase.WidgetFactory;
-import uk.co.mruoc.domain.usecase.WidgetRepository;
-import uk.co.mruoc.domain.usecase.WidgetService;
-import uk.co.mruoc.service.api.WidgetsApiDelegate;
-import uk.co.mruoc.service.app.rest.RestWidgetsApiDelegate;
+import uk.co.mruoc.domain.widget.usecase.WidgetFactory;
+import uk.co.mruoc.domain.widget.usecase.WidgetRepository;
+import uk.co.mruoc.domain.widget.usecase.WidgetService;
+import uk.co.mruoc.widget.api.WidgetsApiDelegate;
+import uk.co.mruoc.widget.app.rest.RestWidgetsApiDelegate;
 
 @Configuration
 @ComponentScan("uk.co.mruoc.service.api")

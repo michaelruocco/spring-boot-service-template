@@ -1,4 +1,4 @@
-package uk.co.mruoc.domain.entity;
+package uk.co.mruoc.domain.widget.entity;
 
 import java.time.Instant;
 import java.util.UUID;

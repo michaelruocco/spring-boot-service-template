@@ -1,4 +1,4 @@
-package uk.co.mruoc.service.app.config;
+package uk.co.mruoc.widget.app.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

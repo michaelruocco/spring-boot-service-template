@@ -1,4 +1,4 @@
-package uk.co.mruoc.domain.entity;
+package uk.co.mruoc.domain.widget.entity;
 
 import lombok.Builder;
 import lombok.Data;

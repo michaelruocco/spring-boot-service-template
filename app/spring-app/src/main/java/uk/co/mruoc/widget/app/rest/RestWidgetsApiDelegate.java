@@ -1,4 +1,4 @@
-package uk.co.mruoc.service.app.rest;
+package uk.co.mruoc.widget.app.rest;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -7,17 +7,17 @@ import java.net.URI;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import uk.co.mruoc.domain.entity.CreateWidgetRequest;
-import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
-import uk.co.mruoc.domain.entity.Widget;
-import uk.co.mruoc.domain.entity.WidgetsPage;
-import uk.co.mruoc.domain.usecase.WidgetService;
-import uk.co.mruoc.service.api.WidgetsApiController;
-import uk.co.mruoc.service.api.WidgetsApiDelegate;
-import uk.co.mruoc.service.api.model.ApiCreateWidgetRequest;
-import uk.co.mruoc.service.api.model.ApiQueryWidgetsPageRequest;
-import uk.co.mruoc.service.api.model.ApiWidget;
-import uk.co.mruoc.service.api.model.ApiWidgetsPage;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequest;
+import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.WidgetsPage;
+import uk.co.mruoc.domain.widget.usecase.WidgetService;
+import uk.co.mruoc.widget.api.WidgetsApiController;
+import uk.co.mruoc.widget.api.WidgetsApiDelegate;
+import uk.co.mruoc.widget.api.model.ApiCreateWidgetRequest;
+import uk.co.mruoc.widget.api.model.ApiQueryWidgetsPageRequest;
+import uk.co.mruoc.widget.api.model.ApiWidget;
+import uk.co.mruoc.widget.api.model.ApiWidgetsPage;
 
 @RequiredArgsConstructor
 public class RestWidgetsApiDelegate implements WidgetsApiDelegate {

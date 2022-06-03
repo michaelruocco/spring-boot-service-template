@@ -1,11 +1,11 @@
-package uk.co.mruoc.domain.usecase;
+package uk.co.mruoc.domain.widget.usecase;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.domain.entity.CreateWidgetRequest;
-import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
-import uk.co.mruoc.domain.entity.Widget;
-import uk.co.mruoc.domain.entity.WidgetsPage;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequest;
+import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.WidgetsPage;
 
 @RequiredArgsConstructor
 public class WidgetService {

@@ -1,10 +1,10 @@
-package uk.co.mruoc.domain.usecase;
+package uk.co.mruoc.domain.widget.usecase;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
-import uk.co.mruoc.domain.entity.QueryWidgetsPageRequest;
-import uk.co.mruoc.domain.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
 
 public interface WidgetRepository {
 

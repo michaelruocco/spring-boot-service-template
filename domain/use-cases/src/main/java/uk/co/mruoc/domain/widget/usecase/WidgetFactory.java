@@ -1,11 +1,11 @@
-package uk.co.mruoc.domain.usecase;
+package uk.co.mruoc.domain.widget.usecase;
 
 import java.time.Clock;
 import java.util.UUID;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.domain.entity.CreateWidgetRequest;
-import uk.co.mruoc.domain.entity.Widget;
+import uk.co.mruoc.domain.widget.entity.CreateWidgetRequest;
+import uk.co.mruoc.domain.widget.entity.Widget;
 
 @RequiredArgsConstructor
 public class WidgetFactory {
