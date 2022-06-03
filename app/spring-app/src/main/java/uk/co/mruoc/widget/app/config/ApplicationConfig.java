@@ -12,7 +12,7 @@ import uk.co.mruoc.widget.api.WidgetsApiDelegate;
 import uk.co.mruoc.widget.app.rest.RestWidgetsApiDelegate;
 
 @Configuration
-@ComponentScan("uk.co.mruoc.service.api")
+@ComponentScan("uk.co.mruoc.widget.api")
 public class ApplicationConfig {
 
     @Bean
