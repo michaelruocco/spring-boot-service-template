@@ -5,12 +5,13 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import uk.co.mruoc.domain.widget.usecase.WidgetFactory;
 import uk.co.mruoc.domain.widget.usecase.WidgetRepository;
 import uk.co.mruoc.domain.widget.usecase.WidgetService;
 import uk.co.mruoc.widget.api.WidgetsApiDelegate;
+import uk.co.mruoc.widget.app.config.test.TestEndpointsDisabledCondition;
 import uk.co.mruoc.widget.app.rest.RestWidgetsApiDelegate;
 
 @Configuration
@@ -18,13 +19,13 @@ import uk.co.mruoc.widget.app.rest.RestWidgetsApiDelegate;
 public class ApplicationConfig {
 
     @Bean
-    @Profile("!local")
+    @Conditional(TestEndpointsDisabledCondition.class)
     public Supplier<UUID> randomUuidSupplier() {
         return UUID::randomUUID;
     }
 
     @Bean
-    @Profile("!local")
+    @Conditional(TestEndpointsDisabledCondition.class)
     public Clock clock() {
         return Clock.systemUTC();
     }

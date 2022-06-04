@@ -1,15 +1,15 @@
-package uk.co.mruoc.widget.app.config;
+package uk.co.mruoc.widget.app.config.test;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import uk.co.mruoc.domain.widget.usecase.WidgetRepository;
 import uk.co.mruoc.domain.widget.usecase.test.OverridableRandomUuidSupplier;
 import uk.co.mruoc.domain.widget.usecase.test.WidgetDeleter;
 import uk.co.mruoc.test.clock.OverridableClock;
 import uk.co.mruoc.widget.app.rest.test.RestTestApiDelegate;
 
-@Profile("local")
+@Conditional(TestEndpointsEnabledCondition.class)
 @Configuration
 public class ApplicationTestConfig {
 
