@@ -13,13 +13,13 @@
 
 ## TODO
 
-1. Add integration tests
-2. Set up test data seeding for integration tests
-3. Build into docker image and publish
-4. Add postgres db implementation / with flyway and run with docker compose
-5. Add OIDC/keycloak configuration integration
-6. Add kafka integration
-7. Add postman examples
+1.  Add integration tests
+2.  Set up test data seeding for integration tests
+3.  Build into docker image and publish
+4.  Add postgres db implementation / with flyway and run with docker compose
+5.  Add OIDC/keycloak configuration integration
+6.  Add kafka integration
+7.  Add postman examples
 
 ## Overview
 
