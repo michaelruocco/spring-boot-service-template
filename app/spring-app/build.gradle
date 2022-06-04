@@ -36,6 +36,7 @@ dependencies {
 
     integrationTestCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     integrationTestAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    integrationTestImplementation testFixtures(project(":api"))
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
     integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"
@@ -45,7 +46,8 @@ dependencies {
 
 bootRun {
     jvmArgs = [
-            "-Dserver.port=8099"
+            "-Dserver.port=8099",
+            "-Dspring.profiles.active=local"
     ]
 }
 

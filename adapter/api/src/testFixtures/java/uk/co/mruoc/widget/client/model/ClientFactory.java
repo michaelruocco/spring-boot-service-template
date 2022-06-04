@@ -1,9 +1,10 @@
-package uk.co.mruoc.widget.app.env;
+package uk.co.mruoc.widget.client.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
 import uk.co.mruoc.widget.ApiClient;
-import uk.co.mruoc.widget.client.WidgetApi;
+import uk.co.mruoc.widget.client.TestApi;
+import uk.co.mruoc.widget.client.WidgetsApi;
 
 @RequiredArgsConstructor
 public class ClientFactory {
@@ -14,8 +15,12 @@ public class ClientFactory {
         this(buildRestTemplate());
     }
 
-    public WidgetApi widgetClient(int port) {
-        return new WidgetApi(toApiClient(port));
+    public WidgetsApi widgetClient(int port) {
+        return new WidgetsApi(toApiClient(port));
+    }
+
+    public TestApi testClient(int port) {
+        return new TestApi(toApiClient(port));
     }
 
     private static RestTemplate buildRestTemplate() {

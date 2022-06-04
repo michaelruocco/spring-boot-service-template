@@ -22,7 +22,7 @@ public class WidgetAppRunnerConfig implements SpringAppRunnerConfig {
 
     @Override
     public String[] getAppArgs() {
-        return new String[] {String.format("--server.port=%d", appPort)};
+        return new String[] {String.format("--server.port=%d", appPort), "--spring.profiles.active=local"};
     }
 
     @Override

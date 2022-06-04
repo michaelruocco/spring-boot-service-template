@@ -11,7 +11,7 @@ paths:
   '/widgets':
     post:
       tags:
-        - widget
+        - widgets
       summary: create a widget
       operationId: create-widget
       requestBody:
@@ -42,7 +42,7 @@ paths:
   '/widgets/{id}':
     get:
       tags:
-        - widget
+        - widgets
       summary: specific widget
       operationId: get-widget-by-id
       parameters:
@@ -68,7 +68,7 @@ paths:
   '/widgets/pages':
     post:
       tags:
-        - widget
+        - widgets
       summary: query a page of widgets
       operationId: query-widgets-page
       requestBody:
@@ -91,6 +91,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  '/test/random-uuid-overrides':
+    post:
+      tags:
+        - test
+      summary: override the next randomly generated uuid for testing purposes
+      operationId: set-uuid-override
+      requestBody:
+        description: the next uuid to be used when a uuid is randomly generated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RandomUuidOverride"
+      responses:
+        '200':
+          description: the uuid override that has been set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RandomUuidOverride"
+    delete:
+      tags:
+        - test
+      summary: delete any override for next randomly generated uuid
+      operationId: delete-uuid-override
+      responses:
+        '204':
+          description: the uuid override has been deleted successfully
 
 components:
   schemas:
@@ -173,6 +201,11 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Widget"
+    RandomUuidOverride:
+      type: array
+      items:
+        type: string
+        format: uuid
     Error:
       type: object
       required:
