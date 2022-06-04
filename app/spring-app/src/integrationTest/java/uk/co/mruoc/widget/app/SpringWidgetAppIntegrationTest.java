@@ -77,16 +77,37 @@ class SpringWidgetAppIntegrationTest {
         assertThat(page.getWidgets()).map(ClientWidget::getDescription).containsExactly("widget-1", "widget-2");
     }
 
+    @Test
+    void shouldGetWidgetById() {
+        UUID id = UUID.fromString("89afff48-d3bf-485f-8fa8-4d40c2e11751");
+        givenNextRandomUuids(id);
+        WidgetsApi client = widgetClient();
+        ClientCreateWidgetRequest request = ClientCreateWidgetRequestMother.build();
+        givenWidgetExists(request);
+
+        ClientWidget widget = client.getWidgetById(id);
+
+        assertThat(widget.getId()).isEqualTo(id);
+        assertThat(widget.getCreatedAt()).isCloseToUtcNow(within(900, MILLIS));
+        assertThat(widget.getDescription()).isEqualTo(request.getDescription());
+        assertThat(widget.getCost()).isEqualTo(request.getCost());
+    }
+
     private static void deleteAllWidgets() {
         TestApi client = testClient();
         client.deleteAllWidgets();
+        client.deleteUuidOverride();
     }
 
     private static void givenWidgetExistsWithDescriptions(String... descriptions) {
-        WidgetsApi client = widgetClient();
         Arrays.stream(descriptions)
                 .map(d -> ClientCreateWidgetRequestMother.build().description(d))
-                .forEach(client::createWidget);
+                .forEach(SpringWidgetAppIntegrationTest::givenWidgetExists);
+    }
+
+    private static void givenWidgetExists(ClientCreateWidgetRequest request) {
+        WidgetsApi client = widgetClient();
+        client.createWidget(request);
     }
 
     private static void givenNextRandomUuids(UUID... uuids) {

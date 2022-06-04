@@ -52,6 +52,7 @@ paths:
           description: the id of the widget to retrieve
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: widget
