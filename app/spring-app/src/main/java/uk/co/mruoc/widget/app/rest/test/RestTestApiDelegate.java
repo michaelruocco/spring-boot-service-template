@@ -30,8 +30,7 @@ public class RestTestApiDelegate implements TestApiDelegate {
     @Override
     public ResponseEntity<List<OffsetDateTime>> setCurrentTimeOverrides(List<OffsetDateTime> currentTimes) {
         List<Instant> instants = toInstants(currentTimes);
-        // TODO set instants directly with newer version of testing clocks
-        clock.setOverrides(instants.toArray(new Instant[0]));
+        clock.setOverrides(instants);
         return ResponseEntity.ok(currentTimes);
     }
 
