@@ -13,12 +13,11 @@
 
 ## TODO
 
-1.  Add endpoint to set current time and integration test for returning widget by id
-2.  Build into docker image and publish
-3.  Add postgres db implementation / with flyway and run with docker compose
-4.  Add OIDC/keycloak configuration integration
-5.  Add kafka integration
-6.  Add postman examples
+1.  Build into docker image and publish
+2.  Add postgres db implementation / with flyway and run with docker compose
+3.  Add OIDC/keycloak configuration integration
+4.  Add kafka integration
+5.  Add postman examples
 
 ## Overview
 

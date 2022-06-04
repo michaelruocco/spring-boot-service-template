@@ -1,4 +1,4 @@
 dependencies {
-    implementation project(":use-cases")
-    implementation project(":entities")
+    implementation project(":service-template-use-cases")
+    implementation project(":service-template-entities")
 }

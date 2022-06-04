@@ -1,16 +1,16 @@
 rootProject.name = "spring-boot-service-template"
 
-include ":entities"
-project(":entities").projectDir = file("domain/entities")
+include ":service-template-entities"
+project(":service-template-entities").projectDir = file("domain/entities")
 
-include ":use-cases"
-project(":use-cases").projectDir = file("domain/use-cases")
+include ":service-template-use-cases"
+project(":service-template-use-cases").projectDir = file("domain/use-cases")
 
-include ":api"
-project(":api").projectDir = file("adapter/api")
+include ":service-template-api"
+project(":service-template-api").projectDir = file("adapter/api")
 
-include ":repository"
-project(":repository").projectDir = file("adapter/repository")
+include ":service-template-repository"
+project(":service-template-repository").projectDir = file("adapter/repository")
 
-include ":spring-app"
-project(":spring-app").projectDir = file("app/spring-app")
+include ":service-template-spring-app"
+project(":service-template-spring-app").projectDir = file("app/spring-app")

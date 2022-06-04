@@ -32,16 +32,16 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-ui:1.6.9"
     implementation "org.springframework.hateoas:spring-hateoas:1.5.0"
     implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
-    implementation project(":api")
-    implementation project(":entities")
-    implementation project(":use-cases")
-    implementation project(":repository")
+    implementation project(":service-template-api")
+    implementation project(":service-template-entities")
+    implementation project(":service-template-use-cases")
+    implementation project(":service-template-repository")
 
     testImplementation "uk.org.webcompere:system-stubs-jupiter:2.0.1"
 
     integrationTestCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     integrationTestAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    integrationTestImplementation testFixtures(project(":api"))
+    integrationTestImplementation testFixtures(project(":service-template-api"))
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
     integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"

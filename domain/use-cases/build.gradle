@@ -1,8 +1,8 @@
 dependencies {
-    implementation project(":entities")
+    implementation project(":service-template-entities")
     implementation "org.apache.commons:commons-collections4:4.4"
 
-    implementation testFixtures(project(":entities"))
+    implementation testFixtures(project(":service-template-entities"))
 }
 
 apply from: rootProject.file("publish.gradle")

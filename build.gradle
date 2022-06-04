@@ -25,7 +25,7 @@ allprojects {
     apply plugin: "jacoco"
     apply plugin: "nebula.lint"
 
-    group "com.github.michaelruocco.service"
+    group "com.github.michaelruocco.servicetemplate"
     version = rootProject.version
 
     sourceCompatibility = 15
