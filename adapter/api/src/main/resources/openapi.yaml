@@ -91,6 +91,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  '/test/widgets':
+    delete:
+      tags:
+        - test
+      summary: delete all widgets for testing purposes
+      operationId: delete-all-widgets
+      responses:
+        '204':
+          description: all widgets have been deleted successfully
   '/test/random-uuid-overrides':
     post:
       tags:

@@ -49,4 +49,9 @@ public class InMemoryWidgetRepository implements WidgetRepository {
                 .limit(pageParams.getLimit())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAll() {
+        widgets.clear();
+    }
 }
