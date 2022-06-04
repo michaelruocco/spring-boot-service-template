@@ -15,7 +15,15 @@ testSets {
     integrationTest
 }
 
+configurations {
+    testRuntimeOnly.exclude module: "slf4j-simple"
+}
+
 ext["junit-jupiter.version"] = "${junitVersion}"
+
+ext {
+    testingClocksVersion = "0.1.9"
+}
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
@@ -23,6 +31,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springdoc:springdoc-openapi-ui:1.6.9"
     implementation "org.springframework.hateoas:spring-hateoas:1.5.0"
+    implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     implementation project(":api")
     implementation project(":entities")
     implementation project(":use-cases")
@@ -32,14 +41,18 @@ dependencies {
 
     integrationTestCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     integrationTestAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    integrationTestImplementation testFixtures(project(":api"))
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
     integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"
+    integrationTestImplementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
+    integrationTestImplementation "org.awaitility:awaitility:4.2.0"
 }
 
 bootRun {
     jvmArgs = [
-            "-Dserver.port=8099"
+            "-Dserver.port=8099",
+            "-Dspring.profiles.active=local"
     ]
 }
 

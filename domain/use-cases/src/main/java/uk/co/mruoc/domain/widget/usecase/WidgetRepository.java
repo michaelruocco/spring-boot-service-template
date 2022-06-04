@@ -15,4 +15,6 @@ public interface WidgetRepository {
     int getTotalCount(QueryWidgetsPageRequest request);
 
     Collection<Widget> find(QueryWidgetsPageRequest request);
+
+    void deleteAll();
 }

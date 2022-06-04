@@ -10,6 +10,8 @@ servers:
 paths:
   '/widgets':
     post:
+      tags:
+        - widgets
       summary: create a widget
       operationId: create-widget
       requestBody:
@@ -39,6 +41,8 @@ paths:
                 $ref: "#/components/schemas/Error"
   '/widgets/{id}':
     get:
+      tags:
+        - widgets
       summary: specific widget
       operationId: get-widget-by-id
       parameters:
@@ -48,6 +52,7 @@ paths:
           description: the id of the widget to retrieve
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: widget
@@ -63,6 +68,8 @@ paths:
                 $ref: "#/components/schemas/Error"
   '/widgets/pages':
     post:
+      tags:
+        - widgets
       summary: query a page of widgets
       operationId: query-widgets-page
       requestBody:
@@ -85,7 +92,71 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
+  '/test/widgets':
+    delete:
+      tags:
+        - test
+      summary: delete all widgets for testing purposes
+      operationId: delete-all-widgets
+      responses:
+        '204':
+          description: all widgets have been deleted successfully
+  '/test/random-uuid-overrides':
+    post:
+      tags:
+        - test
+      summary: override the next randomly generated uuids for testing purposes
+      operationId: set-uuid-overrides
+      requestBody:
+        description: the next uuids to be used when a uuid is randomly generated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RandomUuidOverrides"
+      responses:
+        '200':
+          description: the uuid override that has been set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RandomUuidOverrides"
+    delete:
+      tags:
+        - test
+      summary: delete any overrides for next randomly generated uuid
+      operationId: delete-uuid-overrides
+      responses:
+        '204':
+          description: the uuid overrides have been deleted successfully
+  '/test/current-times':
+    post:
+      tags:
+        - test
+      summary: override current times for testing purposes
+      operationId: set-current-time-overrides
+      requestBody:
+        description: the next current times to be used when current time is requested
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CurrentTimeOverrides"
+      responses:
+        '200':
+          description: the current time overrides that have been set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrentTimeOverrides"
+    delete:
+      tags:
+        - test
+      summary: delete any overrides for current times
+      operationId: delete-current-time-overrides
+      responses:
+        '204':
+          description: the current time overrides have been deleted successfully
 components:
   schemas:
     QueryWidgetsPageRequest:
@@ -132,6 +203,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         description:
           type: string
         cost:
@@ -166,6 +238,16 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Widget"
+    RandomUuidOverrides:
+      type: array
+      items:
+        type: string
+        format: uuid
+    CurrentTimeOverrides:
+      type: array
+      items:
+        type: string
+        format: date-time
     Error:
       type: object
       required:

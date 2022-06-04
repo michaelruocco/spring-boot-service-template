@@ -1,4 +1,4 @@
-package uk.co.mruoc.domain.repository;
+package uk.co.mruoc.widget.repository;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -48,5 +48,10 @@ public class InMemoryWidgetRepository implements WidgetRepository {
                 .skip(pageParams.getOffset())
                 .limit(pageParams.getLimit())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAll() {
+        widgets.clear();
     }
 }

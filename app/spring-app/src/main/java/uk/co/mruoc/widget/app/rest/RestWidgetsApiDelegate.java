@@ -38,8 +38,7 @@ public class RestWidgetsApiDelegate implements WidgetsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<ApiWidget> getWidgetById(String apiId) {
-        UUID id = UUID.fromString(apiId);
+    public ResponseEntity<ApiWidget> getWidgetById(UUID id) {
         Widget widget = service.getById(id);
         return ResponseEntity.ok(converter.toApiWidget(widget));
     }
@@ -52,8 +51,8 @@ public class RestWidgetsApiDelegate implements WidgetsApiDelegate {
     }
 
     private static URI toCreatedLink(UUID id) {
-        String link = linkTo(methodOn(WidgetsApiController.class).getWidgetById(id.toString()))
-                .toString();
+        String link =
+                linkTo(methodOn(WidgetsApiController.class).getWidgetById(id)).toString();
         return URI.create(workAroundFixLink(link));
     }
 
