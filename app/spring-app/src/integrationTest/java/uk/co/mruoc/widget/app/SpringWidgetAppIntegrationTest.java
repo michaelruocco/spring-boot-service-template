@@ -1,9 +1,8 @@
 package uk.co.mruoc.widget.app;
 
-import static java.time.temporal.ChronoUnit.MILLIS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
 
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +36,7 @@ class SpringWidgetAppIntegrationTest {
     }
 
     @Test
-    void shouldCreateWidget() {
+    void shouldAllocateIdToCreatedWidget() {
         UUID expectedId = UUID.fromString("4488ae82-519b-419f-9661-3c5cd7cc156c");
         givenNextRandomUuids(expectedId);
         WidgetsApi client = widgetClient();
@@ -46,7 +45,27 @@ class SpringWidgetAppIntegrationTest {
         ClientWidget widget = client.createWidget(request);
 
         assertThat(widget.getId()).isEqualTo(expectedId);
-        assertThat(widget.getCreatedAt()).isCloseToUtcNow(within(900, MILLIS));
+    }
+
+    @Test
+    void shouldSetCurrentTimeOnCreatedWidget() {
+        OffsetDateTime currentTime = OffsetDateTime.parse("2022-06-04T15:25:00Z");
+        givenCurrentTimes(currentTime);
+        WidgetsApi client = widgetClient();
+        ClientCreateWidgetRequest request = ClientCreateWidgetRequestMother.build();
+
+        ClientWidget widget = client.createWidget(request);
+
+        assertThat(widget.getCreatedAt()).isEqualTo(currentTime);
+    }
+
+    @Test
+    void shouldSetSpecifiedFieldsOnCreatedWidget() {
+        WidgetsApi client = widgetClient();
+        ClientCreateWidgetRequest request = ClientCreateWidgetRequestMother.build();
+
+        ClientWidget widget = client.createWidget(request);
+
         assertThat(widget.getDescription()).isEqualTo(request.getDescription());
         assertThat(widget.getCost()).isEqualTo(request.getCost());
     }
@@ -81,6 +100,8 @@ class SpringWidgetAppIntegrationTest {
     void shouldGetWidgetById() {
         UUID id = UUID.fromString("89afff48-d3bf-485f-8fa8-4d40c2e11751");
         givenNextRandomUuids(id);
+        OffsetDateTime currentTime = OffsetDateTime.parse("2022-05-04T14:14:11Z");
+        givenCurrentTimes(currentTime);
         WidgetsApi client = widgetClient();
         ClientCreateWidgetRequest request = ClientCreateWidgetRequestMother.build();
         givenWidgetExists(request);
@@ -88,7 +109,7 @@ class SpringWidgetAppIntegrationTest {
         ClientWidget widget = client.getWidgetById(id);
 
         assertThat(widget.getId()).isEqualTo(id);
-        assertThat(widget.getCreatedAt()).isCloseToUtcNow(within(900, MILLIS));
+        assertThat(widget.getCreatedAt()).isEqualTo(currentTime);
         assertThat(widget.getDescription()).isEqualTo(request.getDescription());
         assertThat(widget.getCost()).isEqualTo(request.getCost());
     }
@@ -96,7 +117,7 @@ class SpringWidgetAppIntegrationTest {
     private static void deleteAllWidgets() {
         TestApi client = testClient();
         client.deleteAllWidgets();
-        client.deleteUuidOverride();
+        client.deleteUuidOverrides();
     }
 
     private static void givenWidgetExistsWithDescriptions(String... descriptions) {
@@ -112,7 +133,12 @@ class SpringWidgetAppIntegrationTest {
 
     private static void givenNextRandomUuids(UUID... uuids) {
         TestApi testClient = testClient();
-        testClient.setUuidOverride(Arrays.asList(uuids));
+        testClient.setUuidOverrides(Arrays.asList(uuids));
+    }
+
+    private static void givenCurrentTimes(OffsetDateTime... timestamps) {
+        TestApi testClient = testClient();
+        testClient.setCurrentTimeOverrides(Arrays.asList(timestamps));
     }
 
     private static String toWidgetLocation(UUID id) {

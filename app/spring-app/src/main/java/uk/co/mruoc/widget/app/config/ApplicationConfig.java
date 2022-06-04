@@ -24,8 +24,14 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public WidgetFactory widgetFactory(Supplier<UUID> uuidSupplier) {
-        return new WidgetFactory(uuidSupplier, Clock.systemUTC());
+    @Profile("!local")
+    public Clock clock() {
+        return Clock.systemUTC();
+    }
+
+    @Bean
+    public WidgetFactory widgetFactory(Supplier<UUID> uuidSupplier, Clock clock) {
+        return new WidgetFactory(uuidSupplier, clock);
     }
 
     @Bean

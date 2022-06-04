@@ -105,31 +105,58 @@ paths:
     post:
       tags:
         - test
-      summary: override the next randomly generated uuid for testing purposes
-      operationId: set-uuid-override
+      summary: override the next randomly generated uuids for testing purposes
+      operationId: set-uuid-overrides
       requestBody:
-        description: the next uuid to be used when a uuid is randomly generated
+        description: the next uuids to be used when a uuid is randomly generated
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RandomUuidOverride"
+              $ref: "#/components/schemas/RandomUuidOverrides"
       responses:
         '200':
           description: the uuid override that has been set
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RandomUuidOverride"
+                $ref: "#/components/schemas/RandomUuidOverrides"
     delete:
       tags:
         - test
-      summary: delete any override for next randomly generated uuid
-      operationId: delete-uuid-override
+      summary: delete any overrides for next randomly generated uuid
+      operationId: delete-uuid-overrides
       responses:
         '204':
-          description: the uuid override has been deleted successfully
-
+          description: the uuid overrides have been deleted successfully
+  '/test/current-times':
+    post:
+      tags:
+        - test
+      summary: override current times for testing purposes
+      operationId: set-current-time-overrides
+      requestBody:
+        description: the next current times to be used when current time is requested
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CurrentTimeOverrides"
+      responses:
+        '200':
+          description: the current time overrides that have been set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrentTimeOverrides"
+    delete:
+      tags:
+        - test
+      summary: delete any overrides for current times
+      operationId: delete-current-time-overrides
+      responses:
+        '204':
+          description: the current time overrides have been deleted successfully
 components:
   schemas:
     QueryWidgetsPageRequest:
@@ -211,11 +238,16 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Widget"
-    RandomUuidOverride:
+    RandomUuidOverrides:
       type: array
       items:
         type: string
         format: uuid
+    CurrentTimeOverrides:
+      type: array
+      items:
+        type: string
+        format: date-time
     Error:
       type: object
       required:

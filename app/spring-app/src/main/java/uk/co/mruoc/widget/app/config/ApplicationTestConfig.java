@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile;
 import uk.co.mruoc.domain.widget.usecase.WidgetRepository;
 import uk.co.mruoc.domain.widget.usecase.test.OverridableRandomUuidSupplier;
 import uk.co.mruoc.domain.widget.usecase.test.WidgetDeleter;
+import uk.co.mruoc.test.clock.OverridableClock;
 import uk.co.mruoc.widget.app.rest.test.RestTestApiDelegate;
 
 @Profile("local")
@@ -18,15 +19,21 @@ public class ApplicationTestConfig {
     }
 
     @Bean
+    public OverridableClock overridableClock() {
+        return new OverridableClock();
+    }
+
+    @Bean
     public WidgetDeleter widgetDeleter(WidgetRepository repository) {
         return new WidgetDeleter(repository);
     }
 
     @Bean
     public RestTestApiDelegate adminApiDelegate(
-            OverridableRandomUuidSupplier uuidSupplier, WidgetDeleter widgetDeleter) {
+            OverridableRandomUuidSupplier uuidSupplier, OverridableClock clock, WidgetDeleter widgetDeleter) {
         return RestTestApiDelegate.builder()
                 .uuidSupplier(uuidSupplier)
+                .clock(clock)
                 .widgetDeleter(widgetDeleter)
                 .build();
     }
