@@ -9,6 +9,8 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "org.unbroken-dome.test-sets" version "4.0.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
+    id "com.bmuschko.docker-remote-api" version "7.4.0"
+    id "com.avast.gradle.docker-compose" version "0.16.4"
 }
 
 testSets {
@@ -22,7 +24,9 @@ configurations {
 ext["junit-jupiter.version"] = "${junitVersion}"
 
 ext {
-    testingClocksVersion = "0.1.10"
+    testingClocksVersion = "0.1.11"
+
+    imageName = "michaelruocco/${project.name}"
 }
 
 dependencies {
@@ -61,3 +65,23 @@ springBoot {
 }
 
 apply from: rootProject.file("publish.gradle")
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
+task buildImage(type: DockerBuildImage) {
+    dependsOn bootJar
+    inputDir.set(file("."))
+    images.add("${imageName}:${version}")
+    buildArgs = ["VERSION": version]
+}
+
+task pushImage(type: DockerPushImage) {
+    images.set(buildImage.images)
+}
+
+dockerCompose {
+    startedServices = ['service-template-spring-app']
+    environment.put 'APP_VERSION', version
+}
+project.tasks["composeUp"].dependsOn buildImage
