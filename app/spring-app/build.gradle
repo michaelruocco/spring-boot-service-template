@@ -9,6 +9,8 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "org.unbroken-dome.test-sets" version "4.0.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
+    id "com.bmuschko.docker-remote-api" version "7.4.0"
+    id "com.avast.gradle.docker-compose" version "0.16.4"
 }
 
 testSets {
@@ -22,7 +24,9 @@ configurations {
 ext["junit-jupiter.version"] = "${junitVersion}"
 
 ext {
-    testingClocksVersion = "0.1.9"
+    testingClocksVersion = "0.1.11"
+
+    imageName = "michaelruocco/${project.name}"
 }
 
 dependencies {
@@ -32,16 +36,16 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-ui:1.6.9"
     implementation "org.springframework.hateoas:spring-hateoas:1.5.0"
     implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
-    implementation project(":api")
-    implementation project(":entities")
-    implementation project(":use-cases")
-    implementation project(":repository")
+    implementation project(":service-template-api")
+    implementation project(":service-template-entities")
+    implementation project(":service-template-use-cases")
+    implementation project(":service-template-repository")
 
     testImplementation "uk.org.webcompere:system-stubs-jupiter:2.0.1"
 
     integrationTestCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     integrationTestAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    integrationTestImplementation testFixtures(project(":api"))
+    integrationTestImplementation testFixtures(project(":service-template-api"))
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
     integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"
@@ -61,3 +65,30 @@ springBoot {
 }
 
 apply from: rootProject.file("publish.gradle")
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
+docker {
+    registryCredentials {
+        username.set(System.getenv("DOCKER_USERNAME"))
+        password.set(System.getenv("DOCKER_PASSWORD"))
+    }
+}
+
+task buildImage(type: DockerBuildImage) {
+    dependsOn bootJar
+    inputDir.set(file("."))
+    images.add("${imageName}:${version}")
+    buildArgs = ["VERSION": version]
+}
+
+task pushImage(type: DockerPushImage) {
+    images.set(buildImage.images)
+}
+
+dockerCompose {
+    startedServices = ['service-template-spring-app']
+    environment.put 'APP_VERSION', version
+}
+project.tasks["composeUp"].dependsOn buildImage

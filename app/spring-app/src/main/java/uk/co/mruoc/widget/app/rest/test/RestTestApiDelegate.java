@@ -2,9 +2,9 @@ package uk.co.mruoc.widget.app.rest.test;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.Builder;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +30,7 @@ public class RestTestApiDelegate implements TestApiDelegate {
     @Override
     public ResponseEntity<List<OffsetDateTime>> setCurrentTimeOverrides(List<OffsetDateTime> currentTimes) {
         List<Instant> instants = toInstants(currentTimes);
-        // TODO set instants directly with newer version of testing clocks
-        clock.setOverrides(instants.toArray(new Instant[0]));
+        clock.setOverrides(new ArrayList<>(instants));
         return ResponseEntity.ok(currentTimes);
     }
 
@@ -48,6 +47,6 @@ public class RestTestApiDelegate implements TestApiDelegate {
     }
 
     private static List<Instant> toInstants(List<OffsetDateTime> currentTimes) {
-        return currentTimes.stream().map(OffsetDateTime::toInstant).collect(Collectors.toList());
+        return currentTimes.stream().map(OffsetDateTime::toInstant).toList();
     }
 }

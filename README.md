@@ -13,12 +13,10 @@
 
 ## TODO
 
-1.  Add endpoint to set current time and integration test for returning widget by id
-2.  Build into docker image and publish
-3.  Add postgres db implementation / with flyway and run with docker compose
-4.  Add OIDC/keycloak configuration integration
-5.  Add kafka integration
-6.  Add postman examples
+1.  Add postgres db implementation / with flyway and run with docker compose
+2.  Add OIDC/keycloak configuration integration
+3.  Add kafka integration
+4.  Add postman examples
 
 ## Overview
 
@@ -87,5 +85,8 @@ following secrets to be set up:
 // formats code
 // builds code
 // runs tests
-./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build
+// runs integration tests
+// builds docker image
+// runs docker image
+./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build integrationTest buildImage composeUp
 ```

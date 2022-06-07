@@ -1,6 +1,6 @@
 plugins {
     id "org.openapi.generator" version "${openApiGeneratorVersion}"
-    id 'java-test-fixtures'
+    id "java-test-fixtures"
 }
 
 configurations {
@@ -57,7 +57,6 @@ task buildJavaClient(type: org.openapitools.generator.gradle.plugin.tasks.Genera
     modelPackage = "uk.co.mruoc.widget.client.model"
     modelNamePrefix = "Client"
     configOptions = [
-            java8               : "true",
             library             : "resttemplate",
             dateLibrary         : "java8",
             serializationLibrary: "jackson",
