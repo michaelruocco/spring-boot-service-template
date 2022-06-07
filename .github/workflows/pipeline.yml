@@ -60,7 +60,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonarqube
+        run: ./gradlew sonarqube --stacktrace
 
       - name: Codecov Coverage
         uses: codecov/codecov-action@v1
