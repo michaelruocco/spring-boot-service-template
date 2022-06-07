@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.domain.widget.entity.PageParams;
 import uk.co.mruoc.domain.widget.entity.QueryWidgetsPageRequest;
@@ -47,7 +46,7 @@ public class InMemoryWidgetRepository implements WidgetRepository {
                 .sorted(Comparator.comparing(Widget::getDescription))
                 .skip(pageParams.getOffset())
                 .limit(pageParams.getLimit())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

@@ -6,7 +6,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.money.MonetaryAmount;
 import lombok.RequiredArgsConstructor;
 import org.javamoney.moneta.Money;
@@ -62,7 +61,7 @@ public class ApiTypeConverter {
     }
 
     private List<ApiWidget> toApiWidgets(Collection<Widget> widgets) {
-        return widgets.stream().map(this::toApiWidget).collect(Collectors.toList());
+        return widgets.stream().map(this::toApiWidget).toList();
     }
 
     private PageParams toPageParams(ApiPageParams apiPageParams) {
