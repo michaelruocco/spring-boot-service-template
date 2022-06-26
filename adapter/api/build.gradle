@@ -8,7 +8,7 @@ configurations {
 }
 
 ext {
-    jacksonDatabindNullableVersion = "0.2.2"
+    jacksonDatabindNullableVersion = "0.2.3"
 }
 
 dependencies {
@@ -21,7 +21,7 @@ dependencies {
 
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    testFixturesImplementation "org.springframework:spring-web:5.3.20"
+    testFixturesImplementation "org.springframework:spring-web:${springVersion}"
     testFixturesImplementation "org.openapitools:jackson-databind-nullable:${jacksonDatabindNullableVersion}"
 }
 

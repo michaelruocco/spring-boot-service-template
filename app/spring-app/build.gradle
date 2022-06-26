@@ -24,7 +24,7 @@ configurations {
 ext["junit-jupiter.version"] = "${junitVersion}"
 
 ext {
-    testingClocksVersion = "0.1.11"
+    testingClocksVersion = "0.1.12"
 
     imageName = "michaelruocco/${project.name}"
 }
@@ -33,8 +33,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
     implementation "org.springdoc:springdoc-openapi-ui:1.6.9"
-    implementation "org.springframework.hateoas:spring-hateoas:1.5.0"
+    implementation "org.springframework.hateoas:spring-hateoas:1.5.1"
     implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     implementation project(":service-template-api")
     implementation project(":service-template-entities")
@@ -56,7 +57,8 @@ dependencies {
 bootRun {
     jvmArgs = [
             "-Dserver.port=8099",
-            "-Dspring.profiles.active=local"
+            "-Dspring.profiles.active=local",
+            "-Dauth.issuer.url=http://localhost:8100/auth/realms/demo-local"
     ]
 }
 

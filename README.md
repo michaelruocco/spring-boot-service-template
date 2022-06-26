@@ -90,3 +90,10 @@ following secrets to be set up:
 // runs docker image
 ./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build integrationTest buildImage composeUp
 ```
+
+```bash
+cd app/spring-app
+docker-compose up -d
+cd ../..
+./gradlew bootRun
+```

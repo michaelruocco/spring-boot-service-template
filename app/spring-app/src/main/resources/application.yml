@@ -1,5 +1,6 @@
 spring:
   mustache.check-template-location: false
+  security.oauth2.resourceserver.jwt.issuer-uri: ${auth.issuer.url}
 
 management:
   endpoints.web.exposure.include: info,health

@@ -7,6 +7,9 @@ servers:
   - url: http://localhost:8099/v1
     description: V1 local server for development
 
+security:
+  - jwtAuth: []
+
 paths:
   '/widgets':
     post:
@@ -158,6 +161,11 @@ paths:
         '204':
           description: the current time overrides have been deleted successfully
 components:
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     QueryWidgetsPageRequest:
       type: object
