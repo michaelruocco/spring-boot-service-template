@@ -9,4 +9,5 @@ COPY build/libs/service-template-spring-app-${VERSION}.jar /opt/app.jar
 CMD java \
   -Djava.security.egd=file:/dev/./urandom \
   -Dserver.port=${SERVER_PORT} \
+  -Dauth.issuer.url=${AUTH_ISSUER_URL} \
   -jar /opt/app.jar
