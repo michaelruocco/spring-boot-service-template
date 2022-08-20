@@ -16,7 +16,6 @@ import uk.co.mruoc.widget.client.TestApi;
 import uk.co.mruoc.widget.client.WidgetsApi;
 import uk.co.mruoc.widget.client.model.ClientCreateWidgetRequest;
 import uk.co.mruoc.widget.client.model.ClientCreateWidgetRequestMother;
-import uk.co.mruoc.widget.client.model.ClientFactory;
 import uk.co.mruoc.widget.client.model.ClientPageParams;
 import uk.co.mruoc.widget.client.model.ClientQueryWidgetsPageRequest;
 import uk.co.mruoc.widget.client.model.ClientWidget;
@@ -25,7 +24,6 @@ import uk.co.mruoc.widget.client.model.ClientWidgetsPage;
 class SpringWidgetAppIntegrationTest {
 
     private static final WidgetAppTestEnvironment ENV = WidgetAppTestEnvironment.build();
-    private static final ClientFactory CLIENT_FACTORY = new ClientFactory();
 
     @RegisterExtension
     public static final SpringAppExtension EXTENSION = new SpringAppExtension(ENV);
@@ -146,10 +144,10 @@ class SpringWidgetAppIntegrationTest {
     }
 
     private static WidgetsApi widgetClient() {
-        return CLIENT_FACTORY.widgetClient(ENV.getAppPort());
+        return EXTENSION.getWidgetClient();
     }
 
     private static TestApi testClient() {
-        return CLIENT_FACTORY.testClient(ENV.getAppPort());
+        return EXTENSION.getTestClient();
     }
 }

@@ -6,11 +6,11 @@ buildscript {
 
 plugins {
     id "org.springframework.boot" version "${springBootVersion}"
-    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "io.spring.dependency-management" version "1.0.13.RELEASE"
     id "org.unbroken-dome.test-sets" version "4.0.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
-    id "com.bmuschko.docker-remote-api" version "7.4.0"
-    id "com.avast.gradle.docker-compose" version "0.16.4"
+    id "com.bmuschko.docker-remote-api" version "8.0.0"
+    id "com.avast.gradle.docker-compose" version "0.16.8"
 }
 
 testSets {
@@ -24,7 +24,7 @@ configurations {
 ext["junit-jupiter.version"] = "${junitVersion}"
 
 ext {
-    testingClocksVersion = "0.1.12"
+    testingClocksVersion = "0.1.13"
 
     imageName = "michaelruocco/${project.name}"
 }
@@ -34,7 +34,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
-    implementation "org.springdoc:springdoc-openapi-ui:1.6.9"
+    implementation "org.springdoc:springdoc-openapi-ui:1.6.10"
     implementation "org.springframework.hateoas:spring-hateoas:1.5.1"
     implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     implementation project(":service-template-api")
@@ -49,9 +49,10 @@ dependencies {
     integrationTestImplementation testFixtures(project(":service-template-api"))
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
     integrationTestImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.35.0"
-    integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.5"
+    integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.6"
     integrationTestImplementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     integrationTestImplementation "org.awaitility:awaitility:4.2.0"
+    integrationTestImplementation "com.tngtech.keycloakmock:mock-junit5:0.12.0"
 }
 
 bootRun {

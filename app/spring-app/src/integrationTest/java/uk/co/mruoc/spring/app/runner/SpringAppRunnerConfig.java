@@ -6,11 +6,11 @@ public interface SpringAppRunnerConfig {
 
     Class<?> getAppClass();
 
-    int getAppPort();
+    int getPort();
 
-    String[] getAppArgs();
+    String[] getArgs();
 
-    Duration getAppStartupMaxWait();
+    Duration getStartupMaxWait();
 
-    Duration getAppStartupPollInterval();
+    Duration getStartupPollInterval();
 }

@@ -1,14 +1,15 @@
 package uk.co.mruoc.widget.app.env;
 
 import java.time.Duration;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.mruoc.spring.app.runner.SpringAppRunnerConfig;
 import uk.co.mruoc.widget.app.SpringWidgetApp;
 
-@RequiredArgsConstructor
+@Builder
 public class WidgetAppRunnerConfig implements SpringAppRunnerConfig {
 
     private final int appPort;
+    private final String authIssuerUrl;
 
     @Override
     public Class<?> getAppClass() {
@@ -16,22 +17,26 @@ public class WidgetAppRunnerConfig implements SpringAppRunnerConfig {
     }
 
     @Override
-    public int getAppPort() {
+    public int getPort() {
         return appPort;
     }
 
     @Override
-    public String[] getAppArgs() {
-        return new String[] {String.format("--server.port=%d", appPort), "--spring.profiles.active=local"};
+    public String[] getArgs() {
+        return new String[] {
+            "--spring.profiles.active=local",
+            String.format("--server.port=%d", appPort),
+            String.format("--auth.issuer.url=%s", authIssuerUrl)
+        };
     }
 
     @Override
-    public Duration getAppStartupMaxWait() {
+    public Duration getStartupMaxWait() {
         return Duration.ofSeconds(5);
     }
 
     @Override
-    public Duration getAppStartupPollInterval() {
+    public Duration getStartupPollInterval() {
         return Duration.ofMillis(250);
     }
 }
