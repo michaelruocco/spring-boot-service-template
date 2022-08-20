@@ -59,7 +59,7 @@ bootRun {
     jvmArgs = [
             "-Dserver.port=8099",
             "-Dspring.profiles.active=local",
-            "-Dauth.issuer.url=http://localhost:8100/auth/realms/demo-local"
+            "-Dauth.issuer.url=http://localhost:8091/auth/realms/demo-local"
     ]
 }
 
