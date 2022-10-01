@@ -13,9 +13,9 @@
 
 ## TODO
 
-1. Add postgres db implementation / with flyway
-2. Add kafka integration
-3. Add postman examples
+1.  Add postgres db implementation / with flyway
+2.  Add kafka integration
+3.  Add postman examples
 
 ## Overview
 
@@ -90,11 +90,22 @@ following secrets to be set up:
 ./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build integrationTest buildImage composeUp
 ```
 
+## Running application on local machien with stubbed dependencies
+
+```bash
+./gradlew bootRun \
+  -Dserver.port=8099 \
+  -Dspring.profiles.active=local-stubbed
+```
+
 ## Running application on local machine with docker dependencies
 
 ```bash
-docker-compose -f ./app/spring-app/docker-compose.yml up -d 
-./gradlew bootRun
+docker-compose -f ./app/spring-app/docker-compose.yml up -d
+./gradlew bootRun \
+  -Dserver.port=8099 \
+  -Dspring.profiles.active=local \
+  -Dauth.issuer.url=http://localhost:8091/auth/realms/demo-local
 ```
 
 Once you have killed the running application process from the `bootRun` command

@@ -56,11 +56,7 @@ dependencies {
 }
 
 bootRun {
-    jvmArgs = [
-            "-Dserver.port=8099",
-            "-Dspring.profiles.active=local",
-            "-Dauth.issuer.url=http://localhost:8091/auth/realms/demo-local"
-    ]
+    systemProperties = System.properties
 }
 
 springBoot {
