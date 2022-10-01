@@ -2,6 +2,7 @@ version: '3.9'
 services:
 
   service-template-spring-app:
+    profiles: ["app"]
     image: michaelruocco/service-template-spring-app:${APP_VERSION}
     container_name: service-template-spring-app
     ports:

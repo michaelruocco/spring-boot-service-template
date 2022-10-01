@@ -91,7 +91,7 @@ task pushImage(type: DockerPushImage) {
 }
 
 dockerCompose {
-    startedServices = ['service-template-spring-app']
+    startedServices = ['service-template-spring-app', 'keycloak']
     environment.put 'APP_VERSION', version
 }
 project.tasks["composeUp"].dependsOn buildImage

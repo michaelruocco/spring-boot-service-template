@@ -542,7 +542,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "welcome01"
+          "value": "pwd"
         }
       ],
       "realmRoles": [
@@ -561,7 +561,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "welcomeAdmin01"
+          "value": "pwd"
         }
       ],
       "realmRoles": [

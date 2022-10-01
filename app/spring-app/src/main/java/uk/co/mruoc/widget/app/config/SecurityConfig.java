@@ -12,21 +12,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        /*http.authorizeHttpRequests(
-                auth -> auth.antMatchers("/", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**")
+        http.authorizeHttpRequests(auth -> auth.antMatchers(getPermitAllPatterns())
                         .permitAll()
-                        .anyRequest()
+                        .antMatchers(getAuthenticatedPatterns())
                         .authenticated())
-        .httpBasic(withDefaults());*/
-
-        http.authorizeHttpRequests(auth -> auth.antMatchers("/v1/**").authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(new JwtAuthenticationConverter());
-
         return http.build();
+    }
+
+    private static String[] getPermitAllPatterns() {
+        return new String[] {"/", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"};
+    }
+
+    private static String[] getAuthenticatedPatterns() {
+        return new String[] {"/v1/**"};
     }
 }

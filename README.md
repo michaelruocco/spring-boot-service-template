@@ -13,10 +13,9 @@
 
 ## TODO
 
-1.  Add postgres db implementation / with flyway and run with docker compose
-2.  Add OIDC/keycloak configuration integration
-3.  Add kafka integration
-4.  Add postman examples
+1. Add postgres db implementation / with flyway
+2. Add kafka integration
+3. Add postman examples
 
 ## Overview
 
@@ -91,9 +90,53 @@ following secrets to be set up:
 ./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build integrationTest buildImage composeUp
 ```
 
+## Running application on local machine with docker dependencies
+
 ```bash
-cd app/spring-app
-docker-compose up -d
-cd ../..
+docker-compose -f ./app/spring-app/docker-compose.yml up -d 
 ./gradlew bootRun
+```
+
+Once you have killed the running application process from the `bootRun` command
+you can stop the dependency containers again by running
+
+```bash
+docker-compose -f ./app/spring-app/docker-compose.yml down
+```
+
+## Running application and dependencies within docker
+
+### Set up keycloak hostname entry
+
+When running the application and dependencies within docker a change is required to your local
+machine to set up a hostname for keycloak that maps to localhost, the reason for this is that
+without this change it is not possible to generate a JWT that will match the issuer uri configured
+in the application which is `- AUTH_ISSUER_URL=http://keycloak:8091/auth/realms/demo-local` this
+means that when you generate your token the same hostname (`keycloak`) must be used.
+
+To set this up you will need to edit the file `/etc/hosts` and add the entry: `127.0.0.1    keycloak`.
+
+### Building application docker image
+
+The docker build command is controlled by gradle because it requires the current version, it is run
+by the following command:
+
+```bash
+./gradlew buildImage
+```
+
+### Running the application docker image with dependencies
+
+Running the application docker image also requires the current version in the same way as the build
+command above, the command to run the built application docker image along with all the required
+dependencies is
+
+```bash
+./gradlew composeUp
+```
+
+And when you are finished you can shut the application and dependencies down again by running
+
+```bash
+./gradlew composeDown
 ```

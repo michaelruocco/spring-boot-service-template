@@ -28,8 +28,8 @@ allprojects {
     group "com.github.michaelruocco.servicetemplate"
     version = rootProject.version
 
-    sourceCompatibility = 15
-    targetCompatibility = 15
+    sourceCompatibility = 17
+    targetCompatibility = 17
 
     repositories {
         mavenCentral()
