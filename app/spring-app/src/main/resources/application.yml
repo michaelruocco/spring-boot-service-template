@@ -4,7 +4,7 @@ spring:
   main.banner-mode: "off"
 
 management:
-  endpoints.web.exposure.include: info,health
+  endpoints.web.exposure.include: info,health,prometheus
   endpoint.health.probes.enabled: true
   health:
     livenessState.enabled: true

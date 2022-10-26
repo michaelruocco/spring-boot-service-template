@@ -1,0 +1,33 @@
+receivers:
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: "demo-export"
+          scrape_interval: 5s
+          metrics_path: '/actuator/prometheus'
+          static_configs:
+            - targets: ["service-template-spring-app:8080"]
+
+processors:
+  batch:
+
+extensions:
+  health_check:
+  zpages:
+
+exporters:
+  logging:
+    logLevel: info
+  otlphttp:
+    endpoint: http://wiremock:8080
+    tls:
+        insecure: true
+        insecure_skip_verify: true
+
+service:
+  extensions: [health_check, zpages]
+  pipelines:
+    metrics:
+      receivers: [prometheus]
+      processors: [batch]
+      exporters: [logging, otlphttp]

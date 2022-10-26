@@ -12,10 +12,12 @@ public class WidgetService {
 
     private final WidgetFactory factory;
     private final WidgetRepository repository;
+    private final WidgetMetricRecorder metricRecorder;
 
     public UUID create(CreateWidgetRequest request) {
         Widget widget = factory.build(request);
         repository.save(widget);
+        metricRecorder.recordCreated(widget);
         return widget.getId();
     }
 

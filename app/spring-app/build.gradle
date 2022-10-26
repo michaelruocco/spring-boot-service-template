@@ -30,12 +30,15 @@ ext {
 }
 
 dependencies {
+    runtimeOnly "io.micrometer:micrometer-registry-prometheus"
+
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
     implementation "org.springdoc:springdoc-openapi-ui:1.6.11"
     implementation "org.springframework.hateoas:spring-hateoas:1.5.2"
+
     implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     implementation project(":service-template-api")
     implementation project(":service-template-entities")
@@ -87,7 +90,7 @@ task pushImage(type: DockerPushImage) {
 }
 
 dockerCompose {
-    startedServices = ['service-template-spring-app', 'keycloak']
+    startedServices = ['service-template-spring-app', 'keycloak', 'otel-collector', 'wiremock']
     environment.put 'APP_VERSION', version
 }
 project.tasks["composeUp"].dependsOn buildImage

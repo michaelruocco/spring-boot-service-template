@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/v1/metrics"
+  },
+  "response": {
+    "body" : "{}",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200
+  }
+}
