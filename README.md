@@ -90,7 +90,7 @@ following secrets to be set up:
 ./gradlew clean currentVersion dependencyUpdates criticalLintGradle spotlessApply build integrationTest buildImage composeUp
 ```
 
-## Running application on local machien with stubbed dependencies
+## Running application on local machine with stubbed dependencies
 
 ```bash
 ./gradlew bootRun \

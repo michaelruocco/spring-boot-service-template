@@ -8,7 +8,7 @@ configurations {
 }
 
 ext {
-    jacksonDatabindNullableVersion = "0.2.3"
+    jacksonDatabindNullableVersion = "0.2.4"
 }
 
 dependencies {
